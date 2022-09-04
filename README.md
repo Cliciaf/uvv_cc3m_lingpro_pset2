@@ -84,3 +84,4 @@ Executando o detector de borda na imagem obra.png, temos:
  ![obra2](https://user-images.githubusercontent.com/89753006/188336637-c208b9f2-7f8b-4740-b760-1933f187d0dc.png)
  
  Fim das questões do pset2!
+ Creditos: Auxiliada pelo Lucas Zanon. 
