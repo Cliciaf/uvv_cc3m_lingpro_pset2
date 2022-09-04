@@ -55,24 +55,29 @@ class Image:
         return result
 
     def inverted(self):
+        """inverte o valor do pixel"""
         return self.apply_per_pixel(lambda c: 255-c)
 
     def blurred(self, n):
+        """gera o kernel de desfoque"""
         kernel = self.correlation(kernelGenerator(n))
         kernel.fix_pixel()
         return kernel
 
     def sharpened(self, n):
+        """filtro que deixa a imagem mais nitida"""
+        im_bur = self.blurred(n)
         im = Image.new(self.width, self.height)
         for x in range(self.width):
             for y in range(self.height):
-                sharp = round(2*self.get_pixel(x,y)-(self.blurred(n)).get_pixel(x,y))
+                sharp = round(2*self.get_pixel(x,y)-(im_bur.get_pixel(x,y)))
                 im.set_pixel(x,y, sharp)
         im.fix_pixel()
-        return sharp
+        return im
 
 
     def edges(self):
+        """detecta as bordas da imagem """
         im = Image.new(self.width, self.height)
         kernelX = [[-1, 0, 1],[-2, 0, 2],[-1, 0, 1]]
         kernelY = [[-1, -2, -1],[0, 0, 0],[1, 2, 1]]
@@ -86,6 +91,7 @@ class Image:
         return im
 
     def correlation(self,kernel):
+        """aplica o kernel na imagem"""
         width_kernel = len(kernel)
         im = Image.new(self.width, self.height)
         for x in range(self.width):
@@ -234,9 +240,13 @@ if __name__ == '__main__':
     # and not when the tests are being run.  this is a good place for
     # generating images, etc.
     pass 
-    novaImag = Image.load('imagens_teste/porco.png')
-    blur = novaImag.blurred(5)
-    blur.show()
+
+    #alguns meios para obter as imagens para as questões
+    #questão6
+    #novaImag = Image.load('imagens_teste/obra.png')
+    #edge = novaImag.edges()
+    #edge.show()
+    #edge.save('resultados/obra2.png')
     #questão 2
     #keepInverted = novaImag.inverted()
     #keepInverted.save('resultados/questão2.png')
